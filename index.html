@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room 128</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="scene">
+        <div id="envelope-container" class="envelope-wrapper" onclick="openPostcard()">
+            <img src="images/envelope.png" alt="Envelope" class="envelope-img">
+        </div>
+
+        <div id="postcard-container" class="postcard-wrapper hidden">
+            <div class="postcard-relative">
+                <img src="images/main_card.png" alt="Postcard" class="main-card-img">
+
+                <div class="hotspot rank-zone" title="View Rankings" onclick="showRanking()"></div>
+                <div class="hotspot message-zone" title="Leave a Message" onclick="openModal('message')"></div>
+                <div class="hotspot gate-zone" title="1:28 Time Gate" onclick="openModal('gate')"></div>
+
+                <img src="images/stamp.png" id="stamp-img" class="stamp-overlay hidden">
+                <div class="rabbit-runway">
+                    <img src="images/rabbits.png" id="rabbit-anim" class="rabbits-img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 id="modal-title"></h2>
+            <div id="modal-body">
+                <p id="modal-desc"></p>
+                <div id="input-area" class="input-group hidden">
+                    <input type="text" id="user-name" placeholder="Your Name">
+                    <textarea id="user-message" placeholder="Write your message here..."></textarea>
+                    <button class="submit-btn" onclick="submitAction()">Submit</button>
+                </div>
+                <div id="rank-area" class="hidden">
+                    <ul class="rank-list"></ul>
+                </div>
+            </div>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
