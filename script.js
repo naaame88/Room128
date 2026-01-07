@@ -60,14 +60,14 @@ function submitAction() {
     // --- 0.01% 확률 가챠 (1/10,000) ---
     const rand = Math.random() * 100; // 0.0 ~ 100.0 사이 난수
 
-    if (rand <= 100) { 
+    if (rand <= 0.01) { 
         // 당첨! 황금 도장 등장
         stampImg.src = "images/gold_stamp.png"; 
         stampImg.classList.add('glitter-effect'); // CSS 반짝이 효과 부여
         
         // 포켓미니 슈레급 당첨 알림
         setTimeout(() => {
-            alert("✨ [SUPER RARE] 0.01% 확률의 황금 128호 도장을 획득하셨습니다! ✨");
+            alert("0.01% 확률의 황금 128호 도장을 획득하셨습니다!");
         }, 500);
     } else {
         // 일반 도장
@@ -105,3 +105,4 @@ function showRanking() {
 
 
 function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
