@@ -4,10 +4,8 @@ function openPostcard() {
     const mailContainer = document.getElementById('mail-container');
     const postcard = document.getElementById('postcard-container');
     
-    // 편지 요소 표시
+    // 편지 요소 표시 후 애니메이션 클래스 부여
     postcard.classList.remove('hidden');
-    
-    // 애니메이션 실행을 위해 아주 짧은 지연 후 클래스 추가
     setTimeout(() => {
         mailContainer.classList.add('opened');
     }, 50);
@@ -48,6 +46,7 @@ function submitAction() {
     const msg = document.getElementById('user-message').value.trim();
     if (!name || !msg) return alert("Please fill in both fields.");
 
+    // 로컬 스토리지 저장
     const key = (activeMode === 'gate') ? 'attendance' : 'messages';
     let storage = JSON.parse(localStorage.getItem(key) || '[]');
     storage.push({ date: new Date().toLocaleString(), name, content: msg });
@@ -58,19 +57,19 @@ function submitAction() {
     const stampImg = document.getElementById('stamp-img');
     stampImg.classList.remove('glitter-effect', 'hidden');
 
-    // --- 0.01% 확률 가챠 로직 ---
+    // --- 0.01% 확률 황금 도장 가챠 로직 ---
     const rand = Math.random() * 100;
     
-    // 테스트 시에는 rand <= 100으로 설정해 보세요.
+    // 개발 테스트 시에는 rand <= 100으로 설정하여 확인 가능
     if (rand <= 0.01) { 
-        stampImg.src = "images/gold_stamp.png"; 
+        stampImg.src = "images/gold_stamp.png"; // 황금 도장 이미지명 확인 필수
         stampImg.classList.add('glitter-effect');
-        setTimeout(() => alert("✨ [SUPER RARE] 0.01% 확률의 황금 도장이 찍혔습니다! ✨"), 500);
+        setTimeout(() => alert("0.01% 확률의 황금 도장이 찍혔습니다!"), 500);
     } else {
         stampImg.src = "images/stamp.png";
     }
 
-    // 토끼 애니메이션
+    // 토끼 애니메이션 실행
     document.getElementById('rabbit-anim').animate([
         { left: '-150px' }, { left: '110%' }
     ], { duration: 3500, easing: 'ease-in-out' });
@@ -80,7 +79,7 @@ function showRanking() {
     const modal = document.getElementById('modal');
     const rankList = document.querySelector('.rank-list');
     document.getElementById('modal-title').innerText = "Honor Board";
-    document.getElementById('modal-desc').innerText = "Top Visitors";
+    document.getElementById('modal-desc').innerText = "Top Gate Visitors";
     document.getElementById('input-area').classList.add('hidden');
     document.getElementById('rank-area').classList.remove('hidden');
 
