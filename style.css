@@ -23,7 +23,7 @@ body {
     image-rendering: -webkit-optimize-contrast;
 }
 
-/* 2. 봉투 설정 (클릭 시 아래로 이동) */
+/* 2. 봉투 설정 */
 .envelope-img {
     width: 100%;
     z-index: 10;
@@ -32,14 +32,14 @@ body {
     pointer-events: auto;
 }
 
-/* [해결] 봉투가 내려가면 투명한 상태여도 클릭을 방해하지 않도록 설정 */
+/* 봉투가 내려가면 클릭 방해 안 함 */
 .mail-wrapper.opened .envelope-img {
     transform: translateY(120%);
     opacity: 0;
-    pointer-events: none; /* 이 속성이 있어야 뒤의 편지지가 클릭됩니다 */
+    pointer-events: none;
 }
 
-/* 3. 편지지 설정 (위에서 아래로 하강) */
+/* 3. 편지지 설정 */
 .postcard-wrapper {
     position: absolute;
     width: 95%;
@@ -48,24 +48,24 @@ body {
     transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.1s 2s;
 }
 
-/* [조정] 편지지가 기존보다 더 아래쪽에 안착하도록 수정 */
+/* [조정] 편지지가 화면 정중앙(0%)에 안착하도록 설정 */
 .mail-wrapper.opened .postcard-wrapper {
-    transform: translateY(15%); 
+    transform: translateY(0%); 
     z-index: 20;
 }
 
 .postcard-relative { position: relative; width: 100%; }
 
-/* 4. 편지지 이미지 및 미세 테두리 제거 */
+/* 편지지 이미지 및 미세 테두리 제거 */
 .main-card-img { 
     width: 100%;
     border-radius: 8px;
     box-shadow: 0 15px 60px rgba(0,0,0,0.5);
     display: block;
-    clip-path: inset(1.5px round 8px); /* 이미지 외곽의 잡선을 제거 */
+    clip-path: inset(1.5px round 8px); 
 }
 
-/* 5. 기능 클릭 영역 (핫스팟) */
+/* 4. 기능 클릭 영역 (핫스팟) */
 .hotspot { 
     position: absolute; 
     cursor: pointer; 
@@ -75,7 +75,7 @@ body {
 .message-zone { top: 48%; left: 5%; width: 45%; height: 48%; }
 .gate-zone { top: 48%; right: 5%; width: 45%; height: 48%; }
 
-/* 6. 도장 위치 (우상단 밀착) */
+/* 5. 도장 위치 (우상단 밀착) */
 .stamp-overlay { 
     position: absolute; 
     top: 42%; 
@@ -95,7 +95,7 @@ body {
     to { transform: scale(1.1) rotate(2deg); }
 }
 
-/* 7. 모달 디자인 (고급스러운 세리프 스타일) */
+/* 6. 모달 디자인 [조정] 크기를 더 작고 아담하게 변경 (width: 280px) */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(18, 16, 15, 0.9); display: flex; justify-content: center; align-items: center;
@@ -104,9 +104,9 @@ body {
 
 .modal-content {
     background: #fdfaf1; 
-    padding: 50px 40px; 
+    padding: 35px 30px; /* 패딩 감소 */
     border-radius: 2px;
-    width: 340px; 
+    width: 280px; /* 기존 340px에서 280px로 축소 */
     text-align: center;
     box-shadow: 0 30px 80px rgba(0,0,0,0.6);
     border: 1px solid #d4cbb3;
@@ -115,61 +115,58 @@ body {
 .modal-content h2 {
     font-family: 'Cinzel', serif;
     color: #1a1a1a;
-    margin-bottom: 15px;
-    letter-spacing: 4px;
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+    font-size: 1.3rem; /* 크기 약간 축소 */
     font-weight: 700;
 }
 
 .modal-content p {
-    font-size: 1rem;
+    font-size: 0.9rem; /* 글씨 크기 축소 */
     color: #555;
-    margin-bottom: 35px;
+    margin-bottom: 25px;
     font-style: italic;
 }
 
-/* 8. 세련된 입력창 (언더라인 스타일) */
+/* 7. 입력창 디자인 */
 .input-group input, .input-group textarea {
     width: 100%;
     background: transparent;
     border: none;
     border-bottom: 1px solid #bbb;
-    margin-bottom: 25px;
-    padding: 12px 0;
+    margin-bottom: 15px; /* 간격 축소 */
+    padding: 8px 0;
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #1a1a1a;
     outline: none;
-    transition: all 0.4s ease;
 }
 
-.input-group textarea { height: 100px; resize: none; line-height: 1.6; }
-.input-group input::placeholder, .input-group textarea::placeholder { color: #aaa; font-style: italic; }
+.input-group textarea { height: 70px; resize: none; line-height: 1.5; } /* 높이 축소 */
 .input-group input:focus, .input-group textarea:focus { border-bottom: 1.5px solid #1a1a1a; }
 
-/* 9. 버튼 디자인 */
+/* 8. 버튼 디자인 */
 .submit-btn, .close-btn {
-    background: #1a1a1a; color: #fdfaf1; border: none; padding: 15px; 
-    cursor: pointer; width: 100%; margin-top: 15px;
-    font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 2.5px;
-    text-transform: uppercase; transition: background 0.3s;
+    background: #1a1a1a; color: #fdfaf1; border: none; padding: 12px; 
+    cursor: pointer; width: 100%; margin-top: 10px;
+    font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
-.submit-btn:hover { background: #3d3d3d; }
-.close-btn { background: transparent; color: #888; border: 1px solid #eee; margin-top: 10px; }
-.close-btn:hover { color: #1a1a1a; border-color: #1a1a1a; }
+.close-btn { background: transparent; color: #888; border: 1px solid #eee; margin-top: 8px; }
 
-/* 10. 토끼 활주로 */
+/* 9. 토끼 활주로 */
 .rabbit-runway { 
     position: absolute; bottom: 5%; left: 0; width: 100%; 
     overflow: hidden; height: 130px; pointer-events: none; 
 }
 .rabbits-img { position: absolute; left: -250px; width: 130px; }
 
-/* 11. 랭킹 리스트 스타일 */
+/* 10. 랭킹 리스트 */
 .rank-list { list-style: none; padding: 0; text-align: left; }
 .rank-list li {
-    padding: 10px 0;
+    padding: 8px 0;
     border-bottom: 1px solid #eee;
     color: #444;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
 }
