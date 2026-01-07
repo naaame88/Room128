@@ -60,7 +60,7 @@ function submitAction() {
     // --- 0.01% 확률 가챠 (1/10,000) ---
     const rand = Math.random() * 100; // 0.0 ~ 100.0 사이 난수
 
-    if (rand <= 99) { 
+    if (rand <= 100) { 
         // 당첨! 황금 도장 등장
         stampImg.src = "images/gold_stamp.png"; 
         stampImg.classList.add('glitter-effect'); // CSS 반짝이 효과 부여
@@ -102,5 +102,6 @@ function showRanking() {
 
     modal.classList.remove('hidden');
 }
+
 
 function closeModal() { document.getElementById('modal').classList.add('hidden'); }
