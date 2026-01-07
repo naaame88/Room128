@@ -26,7 +26,7 @@ body {
 .envelope-img {
     width: 100%;
     z-index: 10;
-    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.5s;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s;
     filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4));
 }
 
@@ -42,7 +42,7 @@ body {
     width: 100%;
     z-index: 5;
     transform: translateY(0);
-    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), z-index 1s 3s;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.1s 0.75s;
 }
 
 .mail-wrapper.opened .postcard-wrapper {
@@ -86,5 +86,4 @@ body {
 .submit-btn, .close-btn {
     background: #24211e; color: white; border: none; padding: 8px;
     border-radius: 4px; cursor: pointer; width: 100%; margin-top: 10px;
-
 }
