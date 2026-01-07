@@ -72,12 +72,12 @@ body {
 .message-zone { top: 48%; left: 5%; width: 45%; height: 48%; }
 .gate-zone { top: 48%; right: 5%; width: 45%; height: 48%; }
 
-/* 5. 도장 및 효과 - [수정] 도장 크기를 대폭 축소 (24% -> 12%) */
+/* 5. 도장 설정 [수정] 도장을 아래로 내리고 위치를 미세 조정했습니다. */
 .stamp-overlay { 
     position: absolute; 
-    top: 42%; 
+    top: 55%;   /* 기존 42%에서 55%로 내려서 위치를 조정 */
     right: 8%; 
-    width: 12%; 
+    width: 12%; /* 크기는 작게 유지 */
     z-index: 35; 
     filter: drop-shadow(2px 5px 8px rgba(0,0,0,0.4));
 }
@@ -148,7 +148,7 @@ body {
 
 .close-btn { background: transparent; color: #888; border: 1px solid #eee; margin-top: 5px; }
 
-/* 7. 토끼 활주로 - 높이와 이미지 너비 조정 */
+/* 7. 기타 요소 (토끼 및 랭킹) */
 .rabbit-runway { 
     position: absolute; bottom: 5%; left: 0; width: 100%; 
     overflow: hidden; height: 100px; pointer-events: none; 
