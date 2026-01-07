@@ -2,7 +2,7 @@
 
 body {
     margin: 0; padding: 0;
-    /* 배경 이미지가 로딩되기 전 선이 튀지 않도록 어두운 배경색 지정 */
+    /* 배경 이미지가 로드되기 전 잔상을 방지하기 위한 배경색 */
     background-color: #24211e; 
     background: url('images/background_dot.jpg') repeat;
     background-size: 300px;
@@ -20,38 +20,38 @@ body {
     height: 100vh;
     display: flex; justify-content: center; align-items: center;
     cursor: pointer;
-    /* 이미지 렌더링 시 선이 보이는 것을 방지 */
+    /* 이미지 경계선 왜곡 방지 */
     image-rendering: -webkit-optimize-contrast; 
 }
 
-/* 봉투 설정: 3초 동안 부드럽게 하강 */
+/* 봉투 설정: 4초 동안 아주 천천히 하강 */
 .envelope-img {
     width: 100%;
     z-index: 10;
-    transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1), opacity 2s;
+    /* transition 시간을 4s로 늘려 우아함을 강조 */
+    transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1), opacity 2.5s;
     filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4));
-    /* 이미지 외곽선 방지 */
-    outline: none;
-    border: none;
+    outline: none; border: none;
 }
 
 .mail-wrapper.opened .envelope-img {
-    transform: translateY(120%);
+    transform: translateY(130%); /* 좀 더 멀리 내려가게 설정 */
     opacity: 0;
     pointer-events: none;
 }
 
-/* 편지지 설정: 3초 동안 부드럽게 상승 */
+/* 편지지 설정: 4초 동안 천천히 상승 */
 .postcard-wrapper {
     position: absolute;
     width: 100%;
     z-index: 5;
     transform: translateY(0);
-    transition: transform 3s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.1s 1.2s;
+    /* 상승 시간 4s, 봉투 앞으로 나오는 타이밍은 1.8s 뒤로 설정 */
+    transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.1s 1.8s;
 }
 
 .mail-wrapper.opened .postcard-wrapper {
-    transform: translateY(-5%);
+    transform: translateY(-8%); /* 위치를 조금 더 위로 조정 */
     z-index: 20;
 }
 
@@ -60,21 +60,19 @@ body {
 .main-card-img { 
     width: 100%; 
     border-radius: 5px; 
-    /* 미세한 선을 가리기 위해 그림자 효과 강화 */
-    box-shadow: 0 0 1px rgba(0,0,0,0.1), 0 10px 30px rgba(0,0,0,0.3);
-    /* 이미지 렌더링 최적화 */
+    /* 미세한 선을 가리기 위한 이중 그림자 효과 */
+    box-shadow: 0 0 1px rgba(0,0,0,0.15), 0 10px 40px rgba(0,0,0,0.4);
     display: block;
-    outline: none;
-    border: none;
+    outline: none; border: none;
 }
 
-/* 핫스팟 영역 (기존 유지) */
+/* 기능 핫스팟 (기존 유지) */
 .hotspot { position: absolute; cursor: pointer; z-index: 30; }
 .rank-zone { top: 2%; left: 8%; width: 84%; height: 28%; }
 .message-zone { top: 48%; left: 5%; width: 45%; height: 48%; }
 .gate-zone { top: 48%; right: 5%; width: 45%; height: 48%; }
 
-/* 도장 및 반짝이 효과 (기존 유지) */
+/* 황금 도장 가챠 효과 */
 .stamp-overlay { position: absolute; top: 55%; right: 10%; width: 20%; z-index: 35; }
 .glitter-effect {
     filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.9)) brightness(1.2);
@@ -85,19 +83,21 @@ body {
     to { transform: scale(1.1) rotate(2deg); }
 }
 
+/* 토끼 애니메이션 */
 .rabbit-runway { position: absolute; bottom: 5%; left: 0; width: 100%; overflow: hidden; height: 50px; pointer-events: none; }
 .rabbits-img { position: absolute; left: -150px; width: 100px; }
 
-/* 모달 (기존 유지) */
+/* 모달 디자인 */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center;
-    z-index: 500; backdrop-filter: blur(5px);
+    background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center;
+    z-index: 500; backdrop-filter: blur(8px);
 }
 .modal-content {
-    background: #fdfaf1; padding: 25px; border-radius: 10px; width: 220px; text-align: center;
+    background: #fdfaf1; padding: 30px; border-radius: 12px; width: 240px; text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 .submit-btn, .close-btn {
-    background: #24211e; color: white; border: none; padding: 8px;
-    border-radius: 4px; cursor: pointer; width: 100%; margin-top: 10px;
+    background: #24211e; color: white; border: none; padding: 10px;
+    border-radius: 5px; cursor: pointer; width: 100%; margin-top: 12px;
 }
