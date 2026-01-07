@@ -7,33 +7,28 @@ body {
     background-size: 300px;
     display: flex; justify-content: center; align-items: center;
     min-height: 100vh; overflow: hidden;
-    font-family: 'Playfair Display', serif;
 }
 
 .hidden { display: none !important; }
 
-/* 메인 컨테이너 */
+/* 1. 전체 크기 확대 (기존 380px -> 500px) */
 .mail-wrapper {
     position: relative;
-    width: 380px;
-    max-width: 90vw;
+    width: 500px; 
+    max-width: 95vw;
     height: 100vh;
     display: flex; justify-content: center; align-items: center;
     cursor: pointer;
-    /* 이미지 렌더링 시 발생하는 미세한 선 방지 */
     image-rendering: -webkit-optimize-contrast;
 }
 
-/* 봉투: 4초 동안 우아하게 하강 */
+/* 봉투 설정: 중앙에서 아래로 천천히 하강 */
 .envelope-img {
     width: 100%;
-    z-index: 30;
-    transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1), opacity 2.5s;
-    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4));
-    /* 테두리 잔상 방지 */
-    border: none;
-    outline: none;
-    display: block;
+    z-index: 10;
+    transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1), opacity 3s;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+    border: none; outline: none;
 }
 
 .mail-wrapper.opened .envelope-img {
@@ -42,44 +37,43 @@ body {
     pointer-events: none;
 }
 
-/* 편지지: 4초 동안 천천히 상승 */
+/* 2. 편지지 설정: 위에서 아래로 내려오는 모션 */
 .postcard-wrapper {
     position: absolute;
-    width: 100%;
-    z-index: 20;
-    transform: translateY(0);
-    /* z-index 전환을 이동 속도에 맞춰 1.8초 뒤로 늦춤 */
-    transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.1s 1.8s;
+    width: 95%; /* 봉투보다 살짝 작게 설정하여 쏙 들어간 느낌 */
+    z-index: 5;
+    /* 처음 위치를 화면 위쪽으로 설정 */
+    transform: translateY(-150%); 
+    transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.1s 2s;
 }
 
+/* 클릭 시 화면 중앙으로 내려옴 */
 .mail-wrapper.opened .postcard-wrapper {
-    transform: translateY(-8%);
+    transform: translateY(-5%);
     z-index: 20;
 }
 
 .postcard-relative { position: relative; width: 100%; }
 
-/* 편지지 이미지: 테두리 선 해결책 */
+/* 편지지 이미지: 테두리 선 보정 */
 .main-card-img { 
-    width: 100%; 
-    border-radius: 5px; 
-    /* 1. 미세한 선을 가리기 위해 아주 부드러운 그림자 추가 */
-    box-shadow: 0 0 1px rgba(0,0,0,0.05), 0 10px 40px rgba(0,0,0,0.3);
-    /* 2. 외곽선 강제 제거 */
-    border: none;
-    outline: none;
+    width: 100%;
+    border-radius: 8px;
+    /* 테두리 잔상을 가리기 위한 부드러운 외곽 처리 */
+    box-shadow: 0 0 1px rgba(0,0,0,0.1), 0 15px 50px rgba(0,0,0,0.4);
+    border: 0 !important;
+    outline: 0 !important;
     display: block;
-    /* 3. 배경 투명 처리 최적화 */
-    background-color: transparent;
 }
 
-/* 기능 핫스팟 및 데코 (기존 유지) */
+/* 핫스팟 (크기 확대에 맞춰 유지) */
 .hotspot { position: absolute; cursor: pointer; z-index: 30; }
 .rank-zone { top: 2%; left: 8%; width: 84%; height: 28%; }
 .message-zone { top: 48%; left: 5%; width: 45%; height: 48%; }
 .gate-zone { top: 48%; right: 5%; width: 45%; height: 48%; }
 
-.stamp-overlay { position: absolute; top: 55%; right: 10%; width: 20%; z-index: 35; }
+/* 도장 및 기타 요소 (기존 유지) */
+.stamp-overlay { position: absolute; top: 55%; right: 10%; width: 22%; z-index: 35; }
 .glitter-effect {
     filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.9)) brightness(1.2);
     animation: gold-shimmer 1s infinite alternate ease-in-out;
@@ -89,8 +83,23 @@ body {
     to { transform: scale(1.1) rotate(2deg); }
 }
 
-.rabbit-runway { position: absolute; bottom: 5%; left: 0; width: 100%; overflow: hidden; height: 50px; pointer-events: none; }
-.rabbits-img { position: absolute; left: -150px; width: 100px; }
+.rabbit-runway {
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    height: 100px; /* 토끼 크기가 커졌으므로 50px에서 100px로 확대 */
+    pointer-events: none;
+    z-index: 40;
+}
+
+.rabbits-img {
+    position: absolute;
+    left: -200px; /* 시작 위치를 조금 더 밖으로 */
+    width: 150px; /* 기본 이미지 크기도 살짝 확대 */
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+}
 
 /* 모달 디자인 */
 .modal-overlay {
