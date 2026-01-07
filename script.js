@@ -1,7 +1,7 @@
 let activeMode = "";
 
 /**
- * 편지 개봉 함수
+ * 편지 개봉: 봉투 하강 & 편지지 위에서 하강
  */
 function openPostcard() {
     const mailContainer = document.getElementById('mail-container');
@@ -15,7 +15,7 @@ function openPostcard() {
 }
 
 /**
- * 모달 제어 (우아한 폰트와 메시지 적용)
+ * 모달 제어: 세련된 영문 메시지 적용
  */
 function openModal(mode) {
     activeMode = mode;
@@ -36,7 +36,7 @@ function openModal(mode) {
         const isTime = (now.getHours() % 12 === 1) && (now.getMinutes() === 28);
         if (isTime) {
             title.innerText = "Time Gate";
-            desc.innerText = "The stars have aligned. Record your visit.";
+            desc.innerText = "The stars have aligned. Leave your mark.";
             inputArea.classList.remove('hidden');
         } else {
             title.innerText = "Locked";
@@ -48,7 +48,7 @@ function openModal(mode) {
 }
 
 /**
- * 데이터 전송 및 토끼 질주 (크기 확대)
+ * 제출 및 토끼 질주 (더 큰 토끼 적용)
  */
 function submitAction() {
     const nameInput = document.getElementById('user-name');
@@ -70,7 +70,6 @@ function submitAction() {
     const stampImg = document.getElementById('stamp-img');
     stampImg.classList.remove('glitter-effect', 'hidden');
 
-    // 0.01% 확률 로직
     const rand = Math.random() * 100;
     if (rand <= 0.01) { 
         stampImg.src = "images/gold_stamp.png"; 
@@ -80,7 +79,7 @@ function submitAction() {
         stampImg.src = "images/stamp.png";
     }
 
-    // 토끼 애니메이션 (크기 scale(1.7)로 확대)
+    // 토끼 애니메이션 (기존 속도 유지, 크기는 scale 1.7로 대폭 확대)
     const rabbit = document.getElementById('rabbit-anim');
     rabbit.animate([
         { left: '-250px', transform: 'scale(1.7)' },
@@ -112,10 +111,3 @@ function showRanking() {
 }
 
 function closeModal() { document.getElementById('modal').classList.add('hidden'); }
-/**
- * 모달 닫기
- */
-function closeModal() {
-    document.getElementById('modal').classList.add('hidden');
-
-}
