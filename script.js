@@ -1,33 +1,34 @@
 let activeMode = "";
 
 function openPostcard() {
-    document.getElementById('envelope-container').classList.add('hidden');
-    document.getElementById('postcard-container').classList.remove('hidden');
+    const mailContainer = document.getElementById('mail-container');
+    const postcard = document.getElementById('postcard-container');
+    
+    // 편지 요소 표시 후 애니메이션 클래스 부여
+    postcard.classList.remove('hidden');
+    setTimeout(() => {
+        mailContainer.classList.add('opened');
+    }, 20);
 }
 
 function openModal(mode) {
     activeMode = mode;
     const modal = document.getElementById('modal');
-    const content = modal.querySelector('.modal-content');
     const title = document.getElementById('modal-title');
     const desc = document.getElementById('modal-desc');
     const inputArea = document.getElementById('input-area');
     const rankArea = document.getElementById('rank-area');
 
     rankArea.classList.add('hidden');
-    content.classList.remove('wide');
-
+    
     if (mode === 'message') {
-        content.classList.add('wide');
         title.innerText = "Congratulations";
-        desc.innerText = "Leave a message.";
+        desc.innerText = "Leave a birthday message.";
         inputArea.classList.remove('hidden');
     } else if (mode === 'gate') {
         const now = new Date();
         const isTime = (now.getHours() % 12 === 1) && (now.getMinutes() === 28);
-
         if (isTime) {
-            content.classList.add('wide');
             title.innerText = "1:28 Time Gate";
             desc.innerText = "Record your visit.";
             inputArea.classList.remove('hidden');
@@ -43,7 +44,7 @@ function openModal(mode) {
 function submitAction() {
     const name = document.getElementById('user-name').value.trim();
     const msg = document.getElementById('user-message').value.trim();
-    if (!name || !msg) return alert("Fill in both fields.");
+    if (!name || !msg) return alert("Please fill in all fields.");
 
     const key = (activeMode === 'gate') ? 'attendance' : 'messages';
     let storage = JSON.parse(localStorage.getItem(key) || '[]');
@@ -53,31 +54,19 @@ function submitAction() {
     closeModal();
 
     const stampImg = document.getElementById('stamp-img');
-    
-    // 이전에 붙었을지 모를 반짝이 효과 초기 제거
-    stampImg.classList.remove('glitter-effect');
+    stampImg.classList.remove('glitter-effect', 'hidden');
 
-    // --- 0.01% 확률 가챠 (1/10,000) ---
-    const rand = Math.random() * 100; // 0.0 ~ 100.0 사이 난수
-
+    // --- 0.01% 확률 가챠 (테스트 시에는 rand <= 100으로 변경해 보세요) ---
+    const rand = Math.random() * 100;
     if (rand <= 0.01) { 
-        // 당첨! 황금 도장 등장
         stampImg.src = "images/gold_stamp.png"; 
-        stampImg.classList.add('glitter-effect'); // CSS 반짝이 효과 부여
-        
-        // 포켓미니 슈레급 당첨 알림
-        setTimeout(() => {
-            alert("0.01% 확률의 황금 128호 도장을 획득하셨습니다!");
-        }, 500);
+        stampImg.classList.add('glitter-effect');
+        setTimeout(() => alert("✨ [SUPER RARE] 0.01% 확률의 황금 도장을 획득했습니다!"), 500);
     } else {
-        // 일반 도장
         stampImg.src = "images/stamp.png";
     }
 
-    // 도장 이미지 보이기
-    stampImg.classList.remove('hidden');
-    
-    // 토끼 애니메이션 실행
+    // 토끼 애니메이션
     document.getElementById('rabbit-anim').animate([
         { left: '-150px' }, { left: '110%' }
     ], { duration: 3500, easing: 'ease-in-out' });
@@ -87,7 +76,7 @@ function showRanking() {
     const modal = document.getElementById('modal');
     const rankList = document.querySelector('.rank-list');
     document.getElementById('modal-title').innerText = "Honor Board";
-    document.getElementById('modal-desc').innerText = "Top Gate Visitors.";
+    document.getElementById('modal-desc').innerText = "Top Visitors";
     document.getElementById('input-area').classList.add('hidden');
     document.getElementById('rank-area').classList.remove('hidden');
 
@@ -98,7 +87,7 @@ function showRanking() {
 
     rankList.innerHTML = sorted.length > 0 
         ? sorted.map((r, i) => `<li><span>${i+1}st</span> ${r[0]} (${r[1]})</li>`).join('')
-        : "<li>No records.</li>";
+        : "<li>No records yet.</li>";
 
     modal.classList.remove('hidden');
 }

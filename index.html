@@ -9,21 +9,21 @@
 </head>
 <body>
     <div class="scene">
-        <div id="envelope-container" class="envelope-wrapper" onclick="openPostcard()">
+        <div id="mail-container" class="mail-wrapper" onclick="openPostcard()">
             <img src="images/envelope.png" alt="Envelope" class="envelope-img">
-        </div>
+            
+            <div id="postcard-container" class="postcard-wrapper hidden">
+                <div class="postcard-relative">
+                    <img src="images/main_card.png" alt="Postcard" class="main-card-img">
+                    
+                    <div class="hotspot rank-zone" title="View Rankings" onclick="event.stopPropagation(); showRanking();"></div>
+                    <div class="hotspot message-zone" title="Leave a Message" onclick="event.stopPropagation(); openModal('message');"></div>
+                    <div class="hotspot gate-zone" title="1:28 Time Gate" onclick="event.stopPropagation(); openModal('gate');"></div>
 
-        <div id="postcard-container" class="postcard-wrapper hidden">
-            <div class="postcard-relative">
-                <img src="images/main_card.png" alt="Postcard" class="main-card-img">
-
-                <div class="hotspot rank-zone" title="View Rankings" onclick="showRanking()"></div>
-                <div class="hotspot message-zone" title="Leave a Message" onclick="openModal('message')"></div>
-                <div class="hotspot gate-zone" title="1:28 Time Gate" onclick="openModal('gate')"></div>
-
-                <img src="images/stamp.png" id="stamp-img" class="stamp-overlay hidden">
-                <div class="rabbit-runway">
-                    <img src="images/rabbits.png" id="rabbit-anim" class="rabbits-img">
+                    <img src="images/stamp.png" id="stamp-img" class="stamp-overlay hidden">
+                    <div class="rabbit-runway">
+                        <img src="images/rabbits.png" id="rabbit-anim" class="rabbits-img">
+                    </div>
                 </div>
             </div>
         </div>
