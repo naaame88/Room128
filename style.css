@@ -75,11 +75,12 @@ body {
 /* 5. 도장 설정 [수정] 도장을 아래로 내리고 위치를 미세 조정했습니다. */
 .stamp-overlay { 
     position: absolute; 
-    top: 55%;   /* 기존 42%에서 55%로 내려서 위치를 조정 */
-    right: 8%; 
-    width: 12%; /* 크기는 작게 유지 */
+    top: 52%;    /* [수정] 기존보다 아래로 내려 우표 칸 높이에 맞춤 */
+    right: 12%;  /* [수정] 우측 여백을 조정하여 우표 칸 가로 위치에 맞춤 */
+    width: 10%;  /* [수정] 우표 칸 크기에 맞게 조금 더 축소 */
     z-index: 35; 
     filter: drop-shadow(2px 5px 8px rgba(0,0,0,0.4));
+    pointer-events: none; /* 도장이 클릭을 방해하지 않도록 설정 */
 }
 
 .glitter-effect {
