@@ -7,11 +7,12 @@ body {
     background-size: 300px;
     display: flex; justify-content: center; align-items: center;
     min-height: 100vh; overflow: hidden;
+    font-family: 'Playfair Display', serif; /* 기본 폰트를 우아한 세리프로 설정 */
 }
 
 .hidden { display: none !important; }
 
-/* 1. 전체 크기 확대 (기존 380px -> 500px) */
+/* 메인 컨테이너 크기 */
 .mail-wrapper {
     position: relative;
     width: 500px; 
@@ -22,32 +23,28 @@ body {
     image-rendering: -webkit-optimize-contrast;
 }
 
-/* 봉투 설정: 중앙에서 아래로 천천히 하강 */
+/* 봉투: 중앙에서 아래로 하강 (4초) */
 .envelope-img {
     width: 100%;
     z-index: 10;
     transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1), opacity 3s;
-    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
-    border: none; outline: none;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
 }
 
 .mail-wrapper.opened .envelope-img {
     transform: translateY(120%);
     opacity: 0;
-    pointer-events: none;
 }
 
-/* 2. 편지지 설정: 위에서 아래로 내려오는 모션 */
+/* 편지지: 위에서 아래로 하강 (4초) */
 .postcard-wrapper {
     position: absolute;
-    width: 95%; /* 봉투보다 살짝 작게 설정하여 쏙 들어간 느낌 */
+    width: 95%;
     z-index: 5;
-    /* 처음 위치를 화면 위쪽으로 설정 */
     transform: translateY(-150%); 
     transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.1s 2s;
 }
 
-/* 클릭 시 화면 중앙으로 내려옴 */
 .mail-wrapper.opened .postcard-wrapper {
     transform: translateY(-5%);
     z-index: 20;
@@ -55,51 +52,127 @@ body {
 
 .postcard-relative { position: relative; width: 100%; }
 
-/* 편지지 이미지: 테두리 선 보정 */
+/* 편지지 이미지: 테두리 선 제거를 위한 미세 클리핑 */
 .main-card-img { 
     width: 100%;
     border-radius: 8px;
-    /* 테두리 잔상을 가리기 위한 부드러운 외곽 처리 */
-    box-shadow: 0 0 1px rgba(0,0,0,0.1), 0 15px 50px rgba(0,0,0,0.4);
-    border: 0 !important;
-    outline: 0 !important;
+    box-shadow: 0 15px 60px rgba(0,0,0,0.5);
     display: block;
+    clip-path: inset(1.5px round 8px); /* 경계선을 1.5px 깎아내어 깔끔하게 처리 */
 }
 
-/* 핫스팟 (크기 확대에 맞춰 유지) */
-.hotspot { position: absolute; cursor: pointer; z-index: 30; }
-.rank-zone { top: 2%; left: 8%; width: 84%; height: 28%; }
-.message-zone { top: 48%; left: 5%; width: 45%; height: 48%; }
-.gate-zone { top: 48%; right: 5%; width: 45%; height: 48%; }
+/* 도장 위치 수정: 오른쪽 위로 더 이동 */
+.stamp-overlay { 
+    position: absolute; 
+    top: 42%; /* 기존보다 위로 */
+    right: 4%; /* 기존보다 오른쪽으로 */
+    width: 24%; 
+    z-index: 35; 
+    filter: drop-shadow(2px 5px 8px rgba(0,0,0,0.4));
+}
 
-/* 도장 및 기타 요소 (기존 유지) */
-.stamp-overlay { position: absolute; top: 55%; right: 10%; width: 22%; z-index: 35; }
 .glitter-effect {
-    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.9)) brightness(1.2);
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8)) brightness(1.2);
     animation: gold-shimmer 1s infinite alternate ease-in-out;
 }
+
 @keyframes gold-shimmer {
     from { transform: scale(1) rotate(-2deg); }
     to { transform: scale(1.1) rotate(2deg); }
 }
 
-.rabbit-runway {
-    position: absolute;
-    bottom: 5%;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    height: 100px; /* 토끼 크기가 커졌으므로 50px에서 100px로 확대 */
-    pointer-events: none;
-    z-index: 40;
+/* 모달 및 입력창 디자인: 우아한 서체와 선 위주의 구성 */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(18, 16, 15, 0.9); display: flex; justify-content: center; align-items: center;
+    z-index: 500; backdrop-filter: blur(12px);
 }
 
-.rabbits-img {
-    position: absolute;
-    left: -200px; /* 시작 위치를 조금 더 밖으로 */
-    width: 150px; /* 기본 이미지 크기도 살짝 확대 */
-    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+.modal-content {
+    background: #fdfaf1; 
+    padding: 45px 35px; 
+    border-radius: 4px; /* 각진 느낌으로 세련미 강조 */
+    width: 340px; 
+    text-align: center;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+    border: 1px solid #d4cbb3;
 }
+
+.modal-content h2 {
+    font-family: 'Cinzel', serif; /* 제목 전용 폰트 */
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    letter-spacing: 3px;
+    font-weight: 700;
+}
+
+.modal-content p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 30px;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+/* 입력창 디자인 개편: 투명하고 세련된 밑줄 스타일 */
+.input-group input, .input-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #bbb;
+    margin-bottom: 25px;
+    padding: 12px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    outline: none;
+    transition: all 0.4s ease;
+}
+
+.input-group textarea {
+    height: 90px;
+    resize: none;
+    line-height: 1.6;
+}
+
+.input-group input::placeholder, .input-group textarea::placeholder {
+    color: #aaa;
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+.input-group input:focus, .input-group textarea:focus {
+    border-bottom: 1.5px solid #1a1a1a;
+}
+
+/* 버튼 디자인: 고급스러운 블랙 무드 */
+.submit-btn, .close-btn {
+    background: #1a1a1a; 
+    color: #fdfaf1; 
+    border: none; 
+    padding: 14px; 
+    border-radius: 2px; 
+    cursor: pointer; 
+    width: 100%; 
+    margin-top: 15px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+}
+
+.submit-btn:hover { background: #3d3d3d; }
+.close-btn { background: transparent; color: #777; border: 1px solid #ddd; margin-top: 10px; }
+.close-btn:hover { color: #1a1a1a; border-color: #1a1a1a; }
+
+/* 토끼 활주로 및 크기 확대 */
+.rabbit-runway { 
+    position: absolute; bottom: 5%; left: 0; width: 100%; 
+    overflow: hidden; height: 120px; pointer-events: none; 
+}
+.rabbits-img { position: absolute; left: -250px; width: 130px; }
 
 /* 모달 디자인 */
 .modal-overlay {
@@ -114,4 +187,5 @@ body {
 .submit-btn, .close-btn {
     background: #24211e; color: white; border: none; padding: 10px;
     border-radius: 5px; cursor: pointer; width: 100%; margin-top: 12px;
+
 }
