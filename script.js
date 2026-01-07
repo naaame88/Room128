@@ -1,22 +1,14 @@
 let activeMode = "";
 
-/**
- * 편지 개봉: 봉투 하강 & 편지지 위에서 하강
- */
 function openPostcard() {
     const mailContainer = document.getElementById('mail-container');
     const postcard = document.getElementById('postcard-container');
-    
     postcard.classList.remove('hidden');
-    
     setTimeout(() => {
         mailContainer.classList.add('opened');
     }, 50);
 }
 
-/**
- * 모달 제어: 세련된 영문 메시지 적용
- */
 function openModal(mode) {
     activeMode = mode;
     const modal = document.getElementById('modal');
@@ -47,9 +39,6 @@ function openModal(mode) {
     modal.classList.remove('hidden');
 }
 
-/**
- * 제출 및 토끼 질주 (더 큰 토끼 적용)
- */
 function submitAction() {
     const nameInput = document.getElementById('user-name');
     const msgInput = document.getElementById('user-message');
@@ -79,13 +68,13 @@ function submitAction() {
         stampImg.src = "images/stamp.png";
     }
 
-    // 토끼 애니메이션 (기존 속도 유지, 크기는 scale 1.7로 대폭 확대)
+    // [수정] 토끼 애니메이션: 크기를 scale(1.2)로 줄이고, 속도를 5.5초(5500)로 늦춤
     const rabbit = document.getElementById('rabbit-anim');
     rabbit.animate([
-        { left: '-250px', transform: 'scale(1.7)' },
-        { left: '115%', transform: 'scale(1.7)' }
+        { left: '-250px', transform: 'scale(1.2)' },
+        { left: '115%', transform: 'scale(1.2)' }
     ], { 
-        duration: 3800, 
+        duration: 5500, 
         easing: 'ease-in-out' 
     });
 }
