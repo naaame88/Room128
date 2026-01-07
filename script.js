@@ -51,8 +51,36 @@ function submitAction() {
     localStorage.setItem(key, JSON.stringify(storage));
 
     closeModal();
-    document.getElementById('stamp-img').classList.remove('hidden');
-    document.getElementById('rabbit-anim').animate([{left: '-150px'}, {left: '110%'}], {duration: 3500});
+
+    const stampImg = document.getElementById('stamp-img');
+    
+    // 이전에 붙었을지 모를 반짝이 효과 초기 제거
+    stampImg.classList.remove('glitter-effect');
+
+    // --- 0.01% 확률 가챠 (1/10,000) ---
+    const rand = Math.random() * 100; // 0.0 ~ 100.0 사이 난수
+
+    if (rand <= 100) { 
+        // 당첨! 황금 도장 등장
+        stampImg.src = "images/gold_stamp.png"; 
+        stampImg.classList.add('glitter-effect'); // CSS 반짝이 효과 부여
+        
+        // 포켓미니 슈레급 당첨 알림
+        setTimeout(() => {
+            alert("✨ [SUPER RARE] 0.01% 확률의 황금 128호 도장을 획득하셨습니다! ✨");
+        }, 500);
+    } else {
+        // 일반 도장
+        stampImg.src = "images/stamp.png";
+    }
+
+    // 도장 이미지 보이기
+    stampImg.classList.remove('hidden');
+    
+    // 토끼 애니메이션 실행
+    document.getElementById('rabbit-anim').animate([
+        { left: '-150px' }, { left: '110%' }
+    ], { duration: 3500, easing: 'ease-in-out' });
 }
 
 function showRanking() {

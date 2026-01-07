@@ -89,3 +89,21 @@ body {
 .stamp-overlay { position: absolute; top: 55%; right: 10%; width: 12%; z-index: 15; }
 .rabbit-runway { position: absolute; bottom: 5%; left: 0; width: 100%; overflow: hidden; height: 60px; pointer-events: none; }
 .rabbits-img { position: absolute; left: -150px; width: 120px; }
+
+/* 황금 도장 전용: 포켓미니 슈레 감성 반짝이 효과 */
+.glitter-effect {
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.9)) brightness(1.2);
+    animation: gold-shimmer 1s infinite alternate ease-in-out;
+    z-index: 100;
+}
+
+@keyframes gold-shimmer {
+    from {
+        transform: scale(1) rotate(-2deg);
+        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.7));
+    }
+    to {
+        transform: scale(1.15) rotate(2deg); /* 살짝 커지면서 회전 */
+        filter: drop-shadow(0 0 25px rgba(255, 240, 150, 1));
+    }
+}
