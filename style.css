@@ -1,61 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
-* { -webkit-tap-highlight-color: transparent; outline: none; }
-
 body {
     margin: 0; padding: 0;
-    /* 배경 도트 이미지 적용 */
     background: url('images/background_dot.jpg') repeat;
     background-size: 300px;
     display: flex; justify-content: center; align-items: center;
     min-height: 100vh; overflow: hidden;
-    font-family: 'Playfair Display', serif;
 }
 
 .hidden { display: none !important; }
 
-/* 메일 컨테이너 및 애니메이션 설정 */
 .mail-wrapper {
     position: relative;
     width: 380px;
     max-width: 90vw;
-    cursor: pointer;
-    transition: transform 0.6s ease;
+    display: flex; justify-content: center; align-items: center;
+    height: 100vh;
 }
 
+/* 봉투 설정 */
 .envelope-img {
     width: 100%;
-    position: relative;
-    z-index: 10; /* 봉투가 편지보다 앞에 옴 */
+    z-index: 10;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s;
     filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4));
 }
 
-.postcard-wrapper {
-    position: absolute;
-    top: 5%; left: 50%;
-    transform: translateX(-50%) translateY(0);
-    width: 92%;
-    z-index: 5; /* 초기엔 봉투 뒤 */
-    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0.1s 0.4s;
+/* 편지 열렸을 때 봉투가 아래로 천천히 내려감 */
+.mail-wrapper.opened .envelope-img {
+    transform: translateY(120%);
+    opacity: 0; /* 완전히 사라지게 하여 클릭 방해 안함 */
+    pointer-events: none;
 }
 
-/* 편지가 꺼내진 상태 */
+/* 편지지 설정 */
+.postcard-wrapper {
+    position: absolute;
+    width: 100%;
+    z-index: 5;
+    /* 처음엔 봉투 뒤에서 약간 대기 */
+    transform: translateY(0);
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.1s 0.75s;
+}
+
+/* 편지 열렸을 때 편지지가 화면 중앙으로 상승 */
 .mail-wrapper.opened .postcard-wrapper {
-    transform: translateX(-50%) translateY(-105%);
-    z-index: 15; /* 봉투 앞으로 나옴 */
+    transform: translateY(-5%); /* 봉투가 내려간 만큼 중앙으로 위치 조정 */
+    z-index: 20;
 }
 
 .postcard-relative { position: relative; width: 100%; }
-.main-card-img { width: 100%; border-radius: 4px; }
+.main-card-img { width: 100%; border-radius: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 
-/* 핫스팟 */
-.hotspot { position: absolute; cursor: pointer; z-index: 20; }
-.rank-zone { top: 0; left: 0; width: 100%; height: 35%; }
-.message-zone { bottom: 0; left: 0; width: 50%; height: 60%; }
-.gate-zone { bottom: 0; right: 0; width: 50%; height: 60%; }
+/* 기능 핫스팟 */
+.hotspot { position: absolute; cursor: pointer; z-index: 30; }
+.rank-zone { top: 2%; left: 8%; width: 84%; height: 28%; }
+.message-zone { top: 48%; left: 5%; width: 45%; height: 48%; }
+.gate-zone { top: 48%; right: 5%; width: 45%; height: 48%; }
 
-/* 도장 및 황금 효과 */
-.stamp-overlay { position: absolute; top: 15%; right: 10%; width: 25%; z-index: 25; }
+/* 도장 가챠 효과 (0.01%) */
+.stamp-overlay { position: absolute; top: 55%; right: 10%; width: 20%; z-index: 35; }
 .glitter-effect {
     filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.9)) brightness(1.2);
     animation: gold-shimmer 1s infinite alternate ease-in-out;
@@ -69,18 +73,12 @@ body {
 .rabbit-runway { position: absolute; bottom: 5%; left: 0; width: 100%; overflow: hidden; height: 50px; pointer-events: none; }
 .rabbits-img { position: absolute; left: -150px; width: 100px; }
 
-/* 모달 스타일 (기존 유지) */
+/* 모달 디자인 (기존 유지) */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.75); display: flex; justify-content: center; align-items: center;
-    z-index: 200; backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center;
+    z-index: 500; backdrop-filter: blur(5px);
 }
 .modal-content {
-    background: #fdfaf1; padding: 20px; border-radius: 8px;
-    color: #333; width: 200px; text-align: center; border: 1px solid #dcd0b9;
-}
-.modal-content.wide { width: 260px; }
-.submit-btn, .close-btn {
-    background: #24211e; color: white; border: none; padding: 8px;
-    border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-top: 10px; width: 100%;
+    background: #fdfaf1; padding: 25px; border-radius: 10px; width: 220px; text-align: center;
 }

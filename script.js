@@ -4,11 +4,13 @@ function openPostcard() {
     const mailContainer = document.getElementById('mail-container');
     const postcard = document.getElementById('postcard-container');
     
-    // 편지 요소 표시 후 애니메이션 클래스 부여
+    // 편지 요소 표시
     postcard.classList.remove('hidden');
+    
+    // 애니메이션 실행을 위해 아주 짧은 지연 후 클래스 추가
     setTimeout(() => {
         mailContainer.classList.add('opened');
-    }, 20);
+    }, 50);
 }
 
 function openModal(mode) {
@@ -44,7 +46,7 @@ function openModal(mode) {
 function submitAction() {
     const name = document.getElementById('user-name').value.trim();
     const msg = document.getElementById('user-message').value.trim();
-    if (!name || !msg) return alert("Please fill in all fields.");
+    if (!name || !msg) return alert("Please fill in both fields.");
 
     const key = (activeMode === 'gate') ? 'attendance' : 'messages';
     let storage = JSON.parse(localStorage.getItem(key) || '[]');
@@ -56,12 +58,14 @@ function submitAction() {
     const stampImg = document.getElementById('stamp-img');
     stampImg.classList.remove('glitter-effect', 'hidden');
 
-    // --- 0.01% 확률 가챠 (테스트 시에는 rand <= 100으로 변경해 보세요) ---
+    // --- 0.01% 확률 가챠 로직 ---
     const rand = Math.random() * 100;
+    
+    // 테스트 시에는 rand <= 100으로 설정해 보세요.
     if (rand <= 0.01) { 
         stampImg.src = "images/gold_stamp.png"; 
         stampImg.classList.add('glitter-effect');
-        setTimeout(() => alert("✨ [SUPER RARE] 0.01% 확률의 황금 도장을 획득했습니다!"), 500);
+        setTimeout(() => alert("✨ [SUPER RARE] 0.01% 확률의 황금 도장이 찍혔습니다! ✨"), 500);
     } else {
         stampImg.src = "images/stamp.png";
     }
