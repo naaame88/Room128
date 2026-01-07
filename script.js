@@ -4,49 +4,18 @@ function openPostcard() {
     const mailContainer = document.getElementById('mail-container');
     const postcard = document.getElementById('postcard-container');
     
-    // 편지 요소 표시 후 애니메이션 클래스 부여
     postcard.classList.remove('hidden');
+    // 브라우저 렌더링을 위해 아주 짧은 시간차를 두고 클래스 추가
     setTimeout(() => {
         mailContainer.classList.add('opened');
     }, 50);
 }
 
-function openModal(mode) {
-    activeMode = mode;
-    const modal = document.getElementById('modal');
-    const title = document.getElementById('modal-title');
-    const desc = document.getElementById('modal-desc');
-    const inputArea = document.getElementById('input-area');
-    const rankArea = document.getElementById('rank-area');
-
-    rankArea.classList.add('hidden');
-    
-    if (mode === 'message') {
-        title.innerText = "Congratulations";
-        desc.innerText = "Leave a birthday message.";
-        inputArea.classList.remove('hidden');
-    } else if (mode === 'gate') {
-        const now = new Date();
-        const isTime = (now.getHours() % 12 === 1) && (now.getMinutes() === 28);
-        if (isTime) {
-            title.innerText = "1:28 Time Gate";
-            desc.innerText = "Record your visit.";
-            inputArea.classList.remove('hidden');
-        } else {
-            title.innerText = "Gate Locked";
-            desc.innerText = "Opens at 1:28.";
-            inputArea.classList.add('hidden');
-        }
-    }
-    modal.classList.remove('hidden');
-}
-
 function submitAction() {
     const name = document.getElementById('user-name').value.trim();
     const msg = document.getElementById('user-message').value.trim();
-    if (!name || !msg) return alert("Please fill in both fields.");
+    if (!name || !msg) return alert("내용을 입력해주세요.");
 
-    // 로컬 스토리지 저장
     const key = (activeMode === 'gate') ? 'attendance' : 'messages';
     let storage = JSON.parse(localStorage.getItem(key) || '[]');
     storage.push({ date: new Date().toLocaleString(), name, content: msg });
@@ -57,22 +26,19 @@ function submitAction() {
     const stampImg = document.getElementById('stamp-img');
     stampImg.classList.remove('glitter-effect', 'hidden');
 
-    // --- 0.01% 확률 황금 도장 가챠 로직 ---
     const rand = Math.random() * 100;
-    
-    // 개발 테스트 시에는 rand <= 100으로 설정하여 확인 가능
     if (rand <= 0.01) { 
-        stampImg.src = "images/gold_stamp.png"; // 황금 도장 이미지명 확인 필수
+        stampImg.src = "images/gold_stamp.png"; 
         stampImg.classList.add('glitter-effect');
-        setTimeout(() => alert("0.01% 확률의 황금 도장이 찍혔습니다!"), 500);
+        setTimeout(() => alert("✨ 0.01% 확률의 황금 도장이 찍혔습니다! ✨"), 500);
     } else {
         stampImg.src = "images/stamp.png";
     }
 
-    // 토끼 애니메이션 실행
+    // 토끼 애니메이션 시간도 우아한 속도에 맞춰 4초로 변경
     document.getElementById('rabbit-anim').animate([
         { left: '-150px' }, { left: '110%' }
-    ], { duration: 3500, easing: 'ease-in-out' });
+    ], { duration: 4000, easing: 'ease-in-out' });
 }
 
 function showRanking() {
