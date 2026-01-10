@@ -74,9 +74,9 @@ body {
 
 .stamp-overlay { 
     position: absolute; 
-    top: 55%;    /* [수정] 52% -> 55%로 내려서 세로 중앙 맞춤 */
-    right: 7%;   /* [수정] 12% -> 7%로 줄여서 더 오른쪽으로 이동 */
-    width: 9%;   /* [수정] 10% -> 9%로 줄여 칸 안에 쏙 들어가게 조절 */
+    top: 60%;    /* [수정] 52% -> 55%로 내려서 세로 중앙 맞춤 */
+    right: 1%;   /* [수정] 12% -> 7%로 줄여서 더 오른쪽으로 이동 */
+    width: 12%;   /* [수정] 10% -> 9%로 줄여 칸 안에 쏙 들어가게 조절 */
     z-index: 35; 
     filter: drop-shadow(2px 5px 8px rgba(0,0,0,0.4));
     pointer-events: none;
