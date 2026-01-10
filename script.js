@@ -1,5 +1,8 @@
 let activeMode = "";
 
+/**
+ * 편지 봉투 클릭 시 실행되는 함수
+ */
 function openPostcard() {
     const mailContainer = document.getElementById('mail-container');
     const postcard = document.getElementById('postcard-container');
@@ -9,6 +12,9 @@ function openPostcard() {
     }, 50);
 }
 
+/**
+ * 모달창 열기 (메시지 작성 또는 타임 게이트)
+ */
 function openModal(mode) {
     activeMode = mode;
     const modal = document.getElementById('modal');
@@ -39,6 +45,9 @@ function openModal(mode) {
     modal.classList.remove('hidden');
 }
 
+/**
+ * 메시지 제출 시 실행되는 함수
+ */
 function submitAction() {
     const nameInput = document.getElementById('user-name');
     const msgInput = document.getElementById('user-message');
@@ -47,6 +56,7 @@ function submitAction() {
 
     if (!name || !msg) return alert("Please fill in the grace of your words.");
 
+    // 로컬 스토리지 데이터 저장
     const key = (activeMode === 'gate') ? 'attendance' : 'messages';
     let storage = JSON.parse(localStorage.getItem(key) || '[]');
     storage.push({ date: new Date().toLocaleString(), name, content: msg });
@@ -56,7 +66,73 @@ function submitAction() {
     msgInput.value = "";
     closeModal();
 
+    // [수정] 토끼 애니메이션을 삭제하고 반짝이 효과 실행
+    createSparkleEffect();
+}
+
+/**
+ * [추가] 반짝이가 편지지를 돌아다니다 도장 위치로 모이는 효과
+ */
+function createSparkleEffect() {
+    const container = document.querySelector('.postcard-relative');
     const stampImg = document.getElementById('stamp-img');
+    const particleCount = 20; // 생성할 반짝이 입자 개수
+
+    // CSS에 설정된 도장의 최종 위치 (% 단위)
+    const targetTop = 55; 
+    const targetRight = 7;
+
+    for (let i = 0; i < particleCount; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle-particle';
+        container.appendChild(sparkle);
+
+        // 랜덤한 시작 위치 선정
+        const startX = Math.random() * 100;
+        const startY = Math.random() * 100;
+        
+        sparkle.style.left = startX + '%';
+        sparkle.style.top = startY + '%';
+
+        // 반짝임과 이동 애니메이션 실행
+        const anim = sparkle.animate([
+            { 
+                left: startX + '%',
+                top: startY + '%',
+                opacity: 0,
+                transform: 'scale(0)'
+            },
+            { 
+                left: Math.random() * 100 + '%',
+                top: Math.random() * 100 + '%',
+                opacity: 1,
+                transform: 'scale(1.5)'
+            },
+            { 
+                left: (100 - targetRight - 5) + '%', 
+                top: (targetTop + 2) + '%',
+                opacity: 0,
+                transform: 'scale(0)'
+            }
+        ], {
+            duration: 2500 + (Math.random() * 1000), // 2.5~3.5초 사이의 무작위 속도
+            easing: 'ease-in-out'
+        });
+
+        // 애니메이션이 끝나면 요소 제거 및 마지막 입자 도달 시 도장 표시
+        anim.onfinish = () => {
+            sparkle.remove();
+            if (i === particleCount - 1) {
+                applyStampLogic(stampImg);
+            }
+        };
+    }
+}
+
+/**
+ * [추가] 반짝이 효과 종료 후 도장을 표시하는 로직
+ */
+function applyStampLogic(stampImg) {
     stampImg.classList.remove('glitter-effect', 'hidden');
 
     const rand = Math.random() * 100;
@@ -67,18 +143,11 @@ function submitAction() {
     } else {
         stampImg.src = "images/stamp.png";
     }
-
-    // [수정] 토끼 애니메이션: 크기를 scale(1.2)로 줄이고, 속도를 5.5초(5500)로 늦춤
-    const rabbit = document.getElementById('rabbit-anim');
-    rabbit.animate([
-        { left: '-250px', transform: 'scale(1.2)' },
-        { left: '115%', transform: 'scale(1.2)' }
-    ], { 
-        duration: 5500, 
-        easing: 'ease-in-out' 
-    });
 }
 
+/**
+ * 명예의 전당 보기
+ */
 function showRanking() {
     const modal = document.getElementById('modal');
     const rankList = document.querySelector('.rank-list');
@@ -99,4 +168,7 @@ function showRanking() {
     modal.classList.remove('hidden');
 }
 
+/**
+ * 모달 닫기
+ */
 function closeModal() { document.getElementById('modal').classList.add('hidden'); }
