@@ -72,15 +72,14 @@ body {
 .message-zone { top: 48%; left: 5%; width: 45%; height: 48%; }
 .gate-zone { top: 48%; right: 5%; width: 45%; height: 48%; }
 
-/* 5. 도장 설정 [수정] 도장을 아래로 내리고 위치를 미세 조정했습니다. */
 .stamp-overlay { 
     position: absolute; 
-    top: 52%;    /* [수정] 기존보다 아래로 내려 우표 칸 높이에 맞춤 */
-    right: 12%;  /* [수정] 우측 여백을 조정하여 우표 칸 가로 위치에 맞춤 */
-    width: 10%;  /* [수정] 우표 칸 크기에 맞게 조금 더 축소 */
+    top: 55%;    /* [수정] 52% -> 55%로 내려서 세로 중앙 맞춤 */
+    right: 7%;   /* [수정] 12% -> 7%로 줄여서 더 오른쪽으로 이동 */
+    width: 9%;   /* [수정] 10% -> 9%로 줄여 칸 안에 쏙 들어가게 조절 */
     z-index: 35; 
     filter: drop-shadow(2px 5px 8px rgba(0,0,0,0.4));
-    pointer-events: none; /* 도장이 클릭을 방해하지 않도록 설정 */
+    pointer-events: none;
 }
 
 .glitter-effect {
