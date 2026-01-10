@@ -71,55 +71,60 @@ function submitAction() {
 }
 
 /**
- * [추가] 반짝이가 편지지를 돌아다니다 도장 위치로 모이는 효과
+ * 반짝이가 회오리치며 도장 위치로 모이는 효과
  */
 function createSparkleEffect() {
     const container = document.querySelector('.postcard-relative');
     const stampImg = document.getElementById('stamp-img');
-    const particleCount = 20; // 생성할 반짝이 입자 개수
+    const particleCount = 25; // 입자 수를 조금 늘려 풍성하게 연출
 
-    // CSS에 설정된 도장의 최종 위치 (% 단위)
-    const targetTop = 55; 
-    const targetRight = 7;
+    // 도장 안착 목표 지점 (style.css와 일치)
+    const targetTop = 72; 
+    const targetRight = 6;
+    const destX = 100 - targetRight - 7; 
+    const destY = targetTop + 5;
 
     for (let i = 0; i < particleCount; i++) {
         const sparkle = document.createElement('div');
         sparkle.className = 'sparkle-particle';
         container.appendChild(sparkle);
 
-        // 랜덤한 시작 위치 선정
+        // 랜덤한 시작 위치
         const startX = Math.random() * 100;
         const startY = Math.random() * 100;
         
-        sparkle.style.left = startX + '%';
-        sparkle.style.top = startY + '%';
+        // 각 입자마다 고유한 회전 반경과 각도 부여
+        const angle = Math.random() * Math.PI * 2;
+        const radius = 10 + Math.random() * 15; // 회오리 치는 반경
 
-        // 반짝임과 이동 애니메이션 실행
         const anim = sparkle.animate([
             { 
-                left: startX + '%',
-                top: startY + '%',
-                opacity: 0,
-                transform: 'scale(0)'
+                left: startX + '%', 
+                top: startY + '%', 
+                opacity: 0, 
+                transform: 'scale(0)' 
             },
             { 
-                left: Math.random() * 100 + '%',
-                top: Math.random() * 100 + '%',
+                // 중간 지점: 도장 주변에서 회오리 시작
+                left: (destX + Math.cos(angle) * radius) + '%',
+                top: (destY + Math.sin(angle) * radius) + '%',
                 opacity: 1,
-                transform: 'scale(1.5)'
+                transform: 'scale(1.2)'
             },
             { 
-                left: (100 - targetRight - 5) + '%', 
-                top: (targetTop + 2) + '%',
-                opacity: 0,
-                transform: 'scale(0)'
+                // 최종 지점: 도장 중심으로 정착
+                left: destX + '%', 
+                top: destY + '%', 
+                opacity: 0, 
+                transform: 'scale(0)' 
             }
         ], {
-            duration: 2500 + (Math.random() * 1000), // 2.5~3.5초 사이의 무작위 속도
-            easing: 'ease-in-out'
+            // [수정] 속도를 늦춰(4~5.5초) 더 부드럽고 천천히 움직이게 설정
+            duration: 4000 + (Math.random() * 1500), 
+            easing: 'ease-in-out',
+            delay: i * 50 // 입자들이 순차적으로 생성되어 흐르는 느낌 유도
         });
 
-        // 애니메이션이 끝나면 요소 제거 및 마지막 입자 도달 시 도장 표시
         anim.onfinish = () => {
             sparkle.remove();
             if (i === particleCount - 1) {

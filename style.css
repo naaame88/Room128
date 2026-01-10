@@ -165,12 +165,12 @@ body {
 /* 7. 반짝이 입자 스타일: 하얀색으로 변경 */
 .sparkle-particle {
     position: absolute;
-    width: 4px;
-    height: 4px;
-    background-color: #ffffff; /* [수정] 금색에서 순백색으로 변경 */
+    width: 2px;         /* [수정] 4px -> 2px로 축소하여 더 은은하게 */
+    height: 2px;        /* [수정] 4px -> 2px로 축소 */
+    background-color: #ffffff;
     border-radius: 50%;
     pointer-events: none;
     z-index: 100;
-    /* [수정] 하얀색 광채 효과 (바깥쪽으로 퍼지는 은은한 빛) */
-    box-shadow: 0 0 8px #ffffff, 0 0 15px #e0e0e0; 
+    /* 광채 범위를 줄여 작은 별처럼 보이게 설정 */
+    box-shadow: 0 0 4px #ffffff, 0 0 8px #ffffff; 
 }
