@@ -150,6 +150,10 @@ body {
 
 /* 7. 기타 요소 (반짝이 및 랭킹) */
 
+.rabbit-runway, .rabbits-img {
+    display: none !important;
+}
+
 .rank-list { list-style: none; padding: 0; text-align: left; }
 .rank-list li {
     padding: 6px 0;
